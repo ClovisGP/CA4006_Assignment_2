@@ -1,9 +1,10 @@
 from ComEntity import ComEntity
+from Config import Config
 
 class FundingAgency(ComEntity):
-    _basedAmount = 0
-    _minFunding = 0
-    _maxFunding = 0
+    _basedAmount: int = 0
+    _minFunding: int = 0
+    _maxFunding: int = 0
 
     def __init__(self, id, basedAmount, minFunding, maxFunding):
         super().__init__(id)
@@ -12,7 +13,17 @@ class FundingAgency(ComEntity):
         self._maxFunding = maxFunding
 
     def callback(self, ch, method, properties, body):
-        print("It the received body => ", body)
+        print(str(body))
+        arrayBody = str(body).strip('\'').split(';')
+        if not arrayBody[3]:
+            self.sendMsg(str('default'+'Rsvp'), Config.proposalRefused)
+        amountAsked = int(arrayBody[3])
+        if amountAsked >= self._minFunding and amountAsked <= self._maxFunding and self._basedAmount - amountAsked > 0:
+            self.sendMsg(str('default'+'Rsvp'), Config.proposalApproved)
+            self._basedAmount = self._basedAmount - amountAsked
+        else:
+            self.sendMsg(str('default'+'Rsvp'), Config.proposalRefused)
+        
 
-    def run(self, queueName = 'default') -> None:
-        self.receiveMsg(queueName)
+    def behaviour(self) -> None:
+        self.receiveMsg()

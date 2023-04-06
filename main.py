@@ -5,7 +5,7 @@ import os
 
 if __name__ == '__main__':
     try:
-        receiver = FundingAgency(0, 1000000, 10, 50)
+        receiver = FundingAgency(0, 1000000, 10000, 50000)
         sender = Researcher(0)
 
         sender.start()
