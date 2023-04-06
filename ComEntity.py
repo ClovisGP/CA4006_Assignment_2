@@ -1,13 +1,20 @@
+from threading import Thread
 import pika
+import os
 
-class ComEntity:
+
+class ComEntity(Thread):
 
   _id = 0
 
   def __init__(self, id):
-    _id = id
+    super().__init__()
+    self._id = id
 
-  def sendMsg(self, queueName, msg):
+  def getId(self):
+     return self._id
+
+  def sendMsg(self, queueName='default', msg=''):
     """Send a message on the queueName"""
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
@@ -19,10 +26,10 @@ class ComEntity:
     print("message posted")
     connection.close()
 
-  def callback(ch, method, properties, body):
+  def callback(self, ch, method, properties, body):
           print(" [x] Received %r" % body)
 
-  def receiveMsg(self, queueName):
+  def receiveMsg(self, queueName='default'):
     """Receive a message from the queueName"""
     try:
       connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
@@ -34,4 +41,7 @@ class ComEntity:
       print(' [*] Waiting for messages. To exit press CTRL+C')
       channel.start_consuming()
     except KeyboardInterrupt:
-      exit()
+        os.exit()
+  
+  def run(self) -> None:
+     return super().run()

@@ -1,4 +1,5 @@
 from ComEntity import ComEntity
 
 class Researcher(ComEntity):
-  pass
+    def run(self) -> None:
+        self.sendMsg('default', 'Hello Hello')

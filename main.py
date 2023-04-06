@@ -1,6 +1,18 @@
 from Researcher import Researcher
+from FundingAgency import FundingAgency
+
+import os
 
 if __name__ == '__main__':
-    sender = Researcher(2)
+    try:
+        receiver = FundingAgency(0, 1000000, 10, 50)
+        sender = Researcher(0)
 
-    sender.send('test', "hello")
+        sender.start()
+        receiver.start()
+
+        sender.join()
+        receiver.join()
+    except KeyboardInterrupt:
+        os.exit()
+    
