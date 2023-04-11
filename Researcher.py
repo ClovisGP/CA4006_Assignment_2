@@ -22,11 +22,12 @@ class Researcher(ComEntity):
         self.sendMsg(str(self._idListFundingAgency[0]), requestMsg)
 
         response = self.receiveResponse().strip('\'').split(';')
-        if response[1] == Config.proposalApproved:
-            print('The proposal of the researcher ', self._id, " is approved by " + response[0])
-            self._isBusy = True
-        else:
-            print('The proposal of the researcher ', self._id, " is refused by " + response[0])
+        if int(response[0]) == self._idListFundingAgency[0]:
+            if response[1] == Config.proposalApproved:
+                print('The proposal of the researcher ', self._id, " is approved by " + response[0])
+                self._isBusy = True
+            else:
+                print('The proposal of the researcher ', self._id, " is refused by " + response[0])
     
     def workingOnResearch(self):
         operationChosen = OperationOnResearch.WITHDRAW_MONEY.value#random.choice(list(OperationOnResearch))
@@ -34,9 +35,10 @@ class Researcher(ComEntity):
         self.sendMsg(str(self._idListUniversity[0]), requestMsg)
 
         response = self.receiveResponse().strip('\'').split(';')
-        if response[1] == withDrawResponse.EMPTY_FUND.value or response[1] == withDrawResponse.TAKE_THE_REST.value or  response[1] == withDrawResponse.NOT_A_MEMBER.value:
-            print('The researcher ', self._id, " is no longer working on one of his research")
-            self._isBusy = True
+        if int(response[0]) == self._idListUniversity[0]:
+            if int(response[1]) == withDrawResponse.EMPTY_FUND.value or int(response[1]) == withDrawResponse.TAKE_THE_REST.value or int(response[1]) == withDrawResponse.NOT_A_MEMBER.value:
+                print('The researcher ', self._id, " is no longer working on one of his research")
+                self._isBusy = False
 
     def behaviour(self):
         while (1):

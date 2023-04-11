@@ -37,7 +37,6 @@ class University(ComEntity):
 		print('The university ' + str(self._id) + ' has register a new research asking by ' + request[0])
 
 	def researcherRequestManagement(self, request, account):
-		print(request)
 		research = account.getOneResearch() # I wanted to make a beautiful ternary but python don't like me
 		if len(request) > 3:
 			research = account.getOneResearch(request[3])
