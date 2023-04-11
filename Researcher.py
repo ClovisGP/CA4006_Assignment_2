@@ -1,6 +1,10 @@
 from ComEntity import ComEntity
 from Config import Config
+from Config import OperationOnResearch
+from Config import withDrawResponse
 from typing import List
+import time
+import random
 
 class Researcher(ComEntity):
 
@@ -23,7 +27,21 @@ class Researcher(ComEntity):
             self._isBusy = True
         else:
             print('The proposal of the researcher ', self._id, " is refused by " + response[0])
+    
+    def workingOnResearch(self):
+        operationChosen = OperationOnResearch.WITHDRAW_MONEY.value#random.choice(list(OperationOnResearch))
+        requestMsg = str(self._id) + ';' + str(operationChosen) + ';' + str(random.randrange(1000, 10000))
+        self.sendMsg(str(self._idListUniversity[0]), requestMsg)
+
+        response = self.receiveResponse().strip('\'').split(';')
+        if response[1] == withDrawResponse.EMPTY_FUND.value or response[1] == withDrawResponse.TAKE_THE_REST.value or  response[1] == withDrawResponse.NOT_A_MEMBER.value:
+            print('The researcher ', self._id, " is no longer working on one of his research")
+            self._isBusy = True
 
     def behaviour(self):
-        if not self._isBusy:
-            self.makeResearchProposal()
+        while (1):
+            if self._isBusy == False:
+                self.makeResearchProposal()
+            else:
+                self.workingOnResearch()
+            time.sleep(1)

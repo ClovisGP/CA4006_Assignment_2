@@ -1,11 +1,5 @@
 from typing import List
-from enum import Enum
-
-class withDrawResponse(Enum):
-    NOT_A_MEMBER = 0
-    TAKE_THE_REST = 1
-    NORMAL_WITHDRAW = 2
-    EMPTY_FUND = 3
+from Config import withDrawResponse
 
 class Research:
     _members: List[int]
@@ -24,18 +18,21 @@ class Research:
     def addMember(self, newId: str, requester: str):
         if int(newId) not in self._members:
             self._members.append(int(newId))
-            self._log.append('The researcher ' + newId + ' was added to the researsh ' + self._title + ' by ' + requester)
+            self._log.append('The researcher ' + newId + ' was added by ' + requester)
+            print('The researcher ' + newId + ' was added to the research ' + self._title + ' by ' + requester)
 
     def removeMember(self, targetedId: str, requester: str):
         if int(targetedId) in self._members:
             self._members.remove(int(targetedId))
-            self._log.append('The researcher ' + targetedId + ' was removed from the researsh ' + self._title + ' by ' + requester)
+            self._log.append('The researcher ' + targetedId + ' was removed by ' + requester)
+            print('The researcher ' + targetedId + ' was removed from the research ' + self._title + ' by ' + requester)
 
-    def withdrawMoney(self, amount: str, requester: str):
+    def withdrawMoney(self, amount: int, requester: str):
         if int(requester) not in self._members:
-            return withDrawResponse.NOT_A_MEMBER
+            return withDrawResponse.NOT_A_MEMBER.value
         if self._fund < 1:
-            return withDrawResponse.EMPTY_FUND
+            return withDrawResponse.EMPTY_FUND.value
         self._fund -= amount
-        self._log.append('The researcher ' + requester + ' has  withdraw ' + amount + 'the fund is now of ' + str(self._fund))
-        return withDrawResponse.TAKE_THE_REST if self._fund <= 0 else withDrawResponse.NORMAL_WITHDRAW
+        self._log.append('The researcher ' + requester + ' has  withdraw ' + str(amount) + 'the fund is now of ' + str(self._fund))
+        print('The researcher ' + requester + ' has  withdraw ' + str(amount) + ' from the research ' + self._title + ' the fund is now of ' + str(self._fund))
+        return withDrawResponse.TAKE_THE_REST.value if self._fund <= 0 else withDrawResponse.NORMAL_WITHDRAW.value
