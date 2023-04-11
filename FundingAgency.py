@@ -13,7 +13,7 @@ class FundingAgency(ComEntity):
         self._maxFunding = maxFunding
 
     def callback(self, ch, method, properties, body):
-        print(str(body))
+        print(str(body, encoding="utf-8"))
         arrayBody = str(body).strip('\'').split(';')
         if not arrayBody[3]:
             self.sendMsg(str('default'+'Rsvp'), Config.proposalRefused)

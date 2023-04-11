@@ -5,14 +5,14 @@ import os
 
 class ComEntity(Thread):
 
-  _id = 0
+  _id: int
 
   def __init__(self, id):
     super().__init__()
     self._id = id
 
   def getId(self):
-     return self._id
+    return self._id
 
   def sendMsg(self, queueName='default', msg: bytearray=''):
     """Send a message on the queueName"""
