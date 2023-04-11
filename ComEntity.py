@@ -14,7 +14,7 @@ class ComEntity(Thread):
   def getId(self):
     return self._id
 
-  def sendMsg(self, queueName='default', msg: bytearray=''):
+  def sendMsg(self, queueName='default', msg =''):
     """Send a message on the queueName"""
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
@@ -24,34 +24,21 @@ class ComEntity(Thread):
                       body=msg)
     connection.close()
 
-  def callback(self, ch, method, properties, body):
-          print(" [x] Received %r" % body)
-
-  def receiveMsg(self, queueName='default'):
-    """Receive a message from the queueName"""
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
-    channel = connection.channel()
-
-    channel.queue_declare(queue=queueName)      
-
-    channel.basic_consume(queue=queueName, on_message_callback=self.callback, auto_ack=True)
-    channel.start_consuming()
-
-  def receiveResponse(self, queueName='default'):
+  def receiveResponse(self):
     """Receive a response from the queueName and quit while returning the body or an empty string"""
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
-    channel.queue_declare(queue=queueName)      
-    method_frame, header_frame, body = channel.basic_get(queue=queueName)        
-    if method_frame is None:
-        connection.close()
-        return ''
-    else:          
-        channel.basic_ack(delivery_tag=method_frame.delivery_tag)
-        connection.close()
-        return body
+    queueName = str(self._id)
+
+    channel.queue_declare(queue=queueName)
+    method_frame, header_frame, body = channel.basic_get(queue=queueName)
+    while (method_frame is None):
+      method_frame, header_frame, body = channel.basic_get(queue=queueName)         
+    channel.basic_ack(delivery_tag=method_frame.delivery_tag)
+    connection.close()
+    return str(body, encoding="utf-8")
   
-  def behaviour():
+  def behaviour(self):
      """"This method aims to contain the behaviour of the class."""
      print("No behaviour programmed for this Entity")
 
