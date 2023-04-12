@@ -1,8 +1,8 @@
 from ComEntity import ComEntity
-from Config import Config
 from Config import OperationOnResearch
 from Config import withDrawResponse
 from Config import createSubject
+from Config import ProposalResponse
 from typing import List
 import time
 import random
@@ -26,11 +26,8 @@ class Researcher(ComEntity):
 
         response = self.receiveResponse().strip('\'').split(';')
         if int(response[0]) == self._idListFundingAgency[0]:
-            if response[1] == Config.proposalApproved:
-                print('The proposal of the researcher ', self._id, " about " + subject + " is approved by " + response[0] + 'with the fund of ' + fund)
+            if int(response[1]) == ProposalResponse.Approved.value:
                 self._isBusy = True
-            else:
-                print('The proposal of the researcher ', self._id, " about " + subject + " is refused by " + response[0] + 'with the fund of ' + fund)
     
     def workingOnResearch(self):
         operationChosen = OperationOnResearch.WITHDRAW_MONEY.value#random.choice(list(OperationOnResearch))

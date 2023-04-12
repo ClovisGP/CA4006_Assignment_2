@@ -4,14 +4,14 @@ from Config import withDrawResponse
 class Research:
     _members: List[int]
     _fund: int
-    _endTime: str
+    _deadLine: int
     _title: str
     _log : List[str] = []
 
-    def __init__(self, memberList, money, endTime, title, idAsker):
+    def __init__(self, memberList, money, deadLine, title, idAsker):
         self._members = memberList
         self._fund = money
-        self._endTime = endTime
+        self._deadLine = deadLine
         self._title = title
         self._log.append('Created by ' + str(idAsker))
     

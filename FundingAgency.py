@@ -1,6 +1,7 @@
 from ComEntity import ComEntity
-from Config import Config
+from Config import ProposalResponse
 from typing import List
+import random
 
 class FundingAgency(ComEntity):
     _basedAmount: int = 0
@@ -20,14 +21,15 @@ class FundingAgency(ComEntity):
 
     def proposalBehaviour(self, request):
         if not request[3]:
-            self.sendMsg(request[0], str(self._id) + ';' + Config.proposalRefused)
+            self.sendMsg(request[0], str(self._id) + ';' + str(ProposalResponse.Refused.value))
         amountAsked = int(request[3])
         if amountAsked >= self._minFunding and amountAsked <= self._maxFunding and self._basedAmount - amountAsked > 0:
-            self.sendMsg(request[0], str(self._id) + ';' + Config.proposalApproved)
-            self.sendMsg(str(self._idListUniversity[0]), str(self._id) + ';' + request[0] + ';' + request[1] + ';' + request[3] + ';' + "None")
+            self.sendMsg(request[0], str(self._id) + ';' + str(ProposalResponse.Approved.value))
+            self.sendMsg(str(self._idListUniversity[0]), str(self._id) + ';' + request[0] + ';' + request[1] + ';' + request[3] + ';' + str(self._days + random.randrange(50, 365)))
+            print("The university " + str(self._id) + "has approved the research " + request[1] + "of the research " + request[0] + "ont the day "+ str(self._days))
             self._basedAmount = self._basedAmount - amountAsked
         else:
-            self.sendMsg(request[0], str(self._id) + ';' + Config.proposalRefused)
+            self.sendMsg(request[0], str(self._id) + ';' + str(ProposalResponse.Refused.value))
 
     def analyse(self, body):
         request = body.strip('\'').split(';')

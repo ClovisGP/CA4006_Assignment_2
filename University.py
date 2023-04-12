@@ -26,9 +26,16 @@ class University(ComEntity):
 			if currentId._idLink == idResearched:
 				return currentId
 		return None
+	
+	def daysActualisation(self, newDay: int):
+		self._days = newDay
+		for currentResearch in self._researchsInProgress:
+			print(currentResearch._deadLine , "----------------", self._days)
+			if currentResearch._deadLine <= self._days:
+				self.deleteResearch(currentResearch, " cause by the deadLine match")
 
-	def deleteResearch(self, researchTargeted: Research):
-		print("The research => " + researchTargeted._title + " is finished on the day:" + str(self._days))
+	def deleteResearch(self, researchTargeted: Research, reason: str = ''):
+		print("The research " + researchTargeted._title + " is finished on the day:" + str(self._days) + reason)
 		members = researchTargeted._members.copy()
 		for memberId in members:
 			self.findAccount(memberId).removeResearch(researchTargeted)
@@ -36,7 +43,7 @@ class University(ComEntity):
 		del researchTargeted
   
 	def researchCreation(self, request):
-		tmp = Research([int(request[1])],int(request[3]), request[4], request[2], request[0])
+		tmp = Research([int(request[1])],int(request[3]), int(request[4]), request[2], request[0])
 		self._researchsInProgress.append(tmp)
 		self.findAccount(int(request[1])).addResearch(tmp)
 		print('The university ' + str(self._id) + ' has register a new research asking by ' + request[0] + ' on the day:' + str(self._days))
@@ -71,9 +78,9 @@ class University(ComEntity):
 		else:
 			account = self.findAccount(idRequest)
 			if account == None: # Not a researcher so it is the TimeKeeper
-				self._days = int(request[1])
-				return None
-			self.researcherRequestManagement(request, account)
+				self.daysActualisation(int(request[1]))
+			else:
+				self.researcherRequestManagement(request, account)
     
 	def behaviour(self) -> None:
 		while (1):

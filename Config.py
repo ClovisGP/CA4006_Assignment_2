@@ -3,13 +3,52 @@ import random
 
 class Config:
     dayDuration = 1
-    proposalApproved = "Approved"
-    proposalRefused = "Refused"
 
+"""
+# Protocols of requests #
 
-"""Request from a researcher to a University"""
+## Request of a researcher to a fundingAgency for a research proposal
+request => id;subject;description;fund
+    id          - id of the researcher
+    subject     - is the title of the research
+    description - is the description of the research
+    fund        - is the asked fund to this research
 
-"""id of the researcher;operation;argument which is optional;title which is optional"""
+## Response of a fundingAgency to a researcher for a research proposal
+request => id;result
+    id          - id of the fundingAgency
+    result      - is a ProposalResponse
+
+## Request of the fundingAgency to the University for the creation of a research Account
+request => id;idMember;subject;fund;deadLine
+    id          - id of the fundingAgency
+    idMember    - is the id of the researcher who has make the proposal
+    subject     - is the title of the research
+    fund        - is the asked fund to this research
+    deadLine    - is the day when the research is finished
+
+## Request from a researcher to a University
+request => id;operation;argument;title
+    id          - id of the researcher
+    operation   - is a OperationOnResearch
+    argument    - can be a amount of fund to withdraw or a id or empty
+    title       - is the title of the research, can be empty
+
+## Response of a University to a researcher for a requested operation
+request => id;result
+    id          - id of the University
+    result      - is a withDrawResponse
+
+## TimeKeeper to University or to FundingAgency 
+Request => id;days
+    id          - id of the TimeKeeper
+    days        - days number
+
+"""
+
+class ProposalResponse(Enum):
+    Approved = 0
+    Refused = 1
 
 class OperationOnResearch(Enum):
     WITHDRAW_MONEY = 0
@@ -30,7 +69,7 @@ class TypeOfEntities(Enum):
     FUNDING_AGENCY = 2
 
 
-""" Subjects générations """
+""" Name générations """
 
 universityName = [
         "Manatees University",
