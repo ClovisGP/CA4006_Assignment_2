@@ -14,21 +14,21 @@ def setUp(listThreads, nameList, idListFundingAgency, idListUniversity, idListRe
     comp = 0
     while comp in range(1):
         nameList.append(createName(TypeOfEntities.FUNDING_AGENCY))
-        listThreads.append(FundingAgency(index, idListUniversity, idListResearcher, 100000, 10000, 50000))
+        listThreads.append(FundingAgency(index, nameList, idListUniversity, idListResearcher, 100000, 10000, 50000))
         idListFundingAgency.append(index)
         comp += 1
         index += 1
     comp = 0
     while comp in range(1):
         nameList.append(createName(TypeOfEntities.UNIVERSITY))
-        listThreads.append(University(index, idListFundingAgency, idListResearcher))
+        listThreads.append(University(index, nameList, idListFundingAgency, idListResearcher))
         idListUniversity.append(index)
         comp += 1
         index += 1
     comp = 0
     while comp in range(3):
         nameList.append(createName(TypeOfEntities.RESEARCHER))
-        listThreads.append(Researcher(index, idListFundingAgency, idListUniversity))
+        listThreads.append(Researcher(index, nameList, idListFundingAgency, idListUniversity))
         idListResearcher.append(index)
         comp += 1
         index += 1

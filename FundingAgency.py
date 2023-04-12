@@ -10,14 +10,16 @@ class FundingAgency(ComEntity):
     _idListUniversity: List[int]
     _idListResearcher: List[int]
     _days: int = 0
+    _nameList: List[str] = []
 
-    def __init__(self, id, idListUniversity, idListResearcher, basedAmount, minFunding, maxFunding):
+    def __init__(self, id, nameList, idListUniversity, idListResearcher, basedAmount, minFunding, maxFunding):
         super().__init__(id)
         self._basedAmount = basedAmount
         self._minFunding = minFunding
         self._maxFunding = maxFunding
         self._idListUniversity = idListUniversity
         self._idListResearcher = idListResearcher
+        self._nameList = nameList
 
     def proposalBehaviour(self, request):
         if not request[3]:
@@ -26,7 +28,7 @@ class FundingAgency(ComEntity):
         if amountAsked >= self._minFunding and amountAsked <= self._maxFunding and self._basedAmount - amountAsked > 0:
             self.sendMsg(request[0], str(self._id) + ';' + str(ProposalResponse.Approved.value))
             self.sendMsg(str(self._idListUniversity[0]), str(self._id) + ';' + request[0] + ';' + request[1] + ';' + request[3] + ';' + str(self._days + random.randrange(50, 365)))
-            print("The university " + str(self._id) + "has approved the research " + request[1] + "of the research " + request[0] + "ont the day "+ str(self._days))
+            print("The funding agency \"" + self._nameList[self._id] + "\" has approved the research \"" + request[1] + "\" of the researcher \"" + self._nameList[int(request[0])] + "\" on the day " + str(self._days))
             self._basedAmount = self._basedAmount - amountAsked
         else:
             self.sendMsg(request[0], str(self._id) + ';' + str(ProposalResponse.Refused.value))

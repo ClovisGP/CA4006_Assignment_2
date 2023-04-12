@@ -12,11 +12,13 @@ class Researcher(ComEntity):
     _isBusy = False
     _idListUniversity: List[int]
     _idListFundingAgency: List[int]
+    _nameList: List[str] = []
 
-    def __init__(self, id, idListFundingAgency, idListUniversity):
+    def __init__(self, id, nameList, idListFundingAgency, idListUniversity):
         super().__init__(id)
         self._idListUniversity = idListUniversity
         self._idListFundingAgency = idListFundingAgency
+        self._nameList = nameList
 
     def makeResearchProposal(self):
         subject = createSubject()
@@ -37,7 +39,7 @@ class Researcher(ComEntity):
         response = self.receiveResponse().strip('\'').split(';')
         if int(response[0]) == self._idListUniversity[0]:
             if int(response[1]) == withDrawResponse.EMPTY_FUND.value or int(response[1]) == withDrawResponse.TAKE_THE_REST.value or int(response[1]) == withDrawResponse.NOT_A_MEMBER.value:
-                print('The researcher ', self._id, " is no longer working on one of his research")
+                print('The researcher \"' + self._nameList[self._id] + "\" is no longer working on one of his research")
                 self._isBusy = False
 
     def behaviour(self):
