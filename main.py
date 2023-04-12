@@ -1,6 +1,7 @@
 from Researcher import Researcher
 from FundingAgency import FundingAgency
 from University import University
+from TimeKeeper import TimeKeeper
 from ComEntity import ComEntity
 from typing import List
 from Config import createName
@@ -13,7 +14,7 @@ def setUp(listThreads, nameList, idListFundingAgency, idListUniversity, idListRe
     comp = 0
     while comp in range(1):
         nameList.append(createName(TypeOfEntities.FUNDING_AGENCY))
-        listThreads.append(FundingAgency(index, idListUniversity, 100000, 10000, 50000))
+        listThreads.append(FundingAgency(index, idListUniversity, idListResearcher, 100000, 10000, 50000))
         idListFundingAgency.append(index)
         comp += 1
         index += 1
@@ -31,6 +32,7 @@ def setUp(listThreads, nameList, idListFundingAgency, idListUniversity, idListRe
         idListResearcher.append(index)
         comp += 1
         index += 1
+    listThreads.append(TimeKeeper(index, idListFundingAgency, idListUniversity))
 
 
 if __name__ == '__main__':

@@ -2,6 +2,7 @@ from enum import Enum
 import random
 
 class Config:
+    dayDuration = 1
     proposalApproved = "Approved"
     proposalRefused = "Refused"
 

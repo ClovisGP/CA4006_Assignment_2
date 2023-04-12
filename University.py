@@ -10,6 +10,7 @@ class University(ComEntity):
 	_listAccount: List[ResearcherAccount] = []
 	_researchsInProgress: List[int] = []
 	_idListResearcher: List[int] = []
+	_days: int = 0
 
 	def __init__(self, id, idListFundingAgency, idListResearcher):
 		super().__init__(id)
@@ -27,7 +28,7 @@ class University(ComEntity):
 		return None
 
 	def deleteResearch(self, researchTargeted: Research):
-		print("The research => " + researchTargeted._title + " is finished")
+		print("The research => " + researchTargeted._title + " is finished on the day:" + str(self._days))
 		members = researchTargeted._members.copy()
 		for memberId in members:
 			self.findAccount(memberId).removeResearch(researchTargeted)
@@ -38,7 +39,7 @@ class University(ComEntity):
 		tmp = Research([int(request[1])],int(request[3]), request[4], request[2], request[0])
 		self._researchsInProgress.append(tmp)
 		self.findAccount(int(request[1])).addResearch(tmp)
-		print('The university ' + str(self._id) + ' has register a new research asking by ' + request[0])
+		print('The university ' + str(self._id) + ' has register a new research asking by ' + request[0] + ' on the day:' + str(self._days))
 
 	def researcherRequestManagement(self, request, account):
 		research = account.getOneResearch() # I wanted to make a beautiful ternary but python don't like me
@@ -69,7 +70,8 @@ class University(ComEntity):
 			self.researchCreation(request)
 		else:
 			account = self.findAccount(idRequest)
-			if account == None: # Not a researcher
+			if account == None: # Not a researcher so it is the TimeKeeper
+				self._days = int(request[1])
 				return None
 			self.researcherRequestManagement(request, account)
     
