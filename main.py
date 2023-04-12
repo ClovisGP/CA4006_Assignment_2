@@ -7,14 +7,16 @@ from typing import List
 from Config import createName
 from Config import TypeOfEntities
 import os
+import random
 
 def setUp(listThreads, nameList, idListFundingAgency, idListUniversity, idListResearcher):
     index: int = 0
 
     comp = 0
-    while comp in range(1):
+    while comp in range(2):
         nameList.append(createName(TypeOfEntities.FUNDING_AGENCY))
-        listThreads.append(FundingAgency(index, nameList, idListUniversity, idListResearcher, 100000, 10000, 50000))
+        tmpFund = 10 ** random.randrange(6, 10)
+        listThreads.append(FundingAgency(index, nameList, idListUniversity, idListResearcher, tmpFund, int(tmpFund * (0.01 * random.randrange(1, 3))), int(tmpFund * (0.01 * random.randrange(25, 40)))))
         idListFundingAgency.append(index)
         comp += 1
         index += 1

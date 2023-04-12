@@ -25,6 +25,7 @@ class FundingAgency(ComEntity):
         if not request[3]:
             self.sendMsg(request[0], str(self._id) + ';' + str(ProposalResponse.Refused.value))
         amountAsked = int(request[3])
+        print(self._minFunding, " < ", amountAsked, " < ", self._maxFunding, " and ", self._basedAmount)
         if amountAsked >= self._minFunding and amountAsked <= self._maxFunding and self._basedAmount - amountAsked > 0:
             self.sendMsg(request[0], str(self._id) + ';' + str(ProposalResponse.Approved.value))
             self.sendMsg(str(self._idListUniversity[0]), str(self._id) + ';' + request[0] + ';' + request[1] + ';' + request[3] + ';' + str(self._days + random.randrange(50, 365)))

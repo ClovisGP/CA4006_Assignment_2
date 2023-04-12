@@ -22,14 +22,16 @@ class Researcher(ComEntity):
 
     def makeResearchProposal(self):
         subject = createSubject()
-        fund = str((10 ** random.randrange(4, 7)) * random.randrange(1, 11))
+        fund = str((10 ** random.randrange(4, 7)) * random.randrange(1, 8))
         requestMsg = str(self._id) + ';' + subject + ';It a research about the ' + subject + ';' + fund
-        self.sendMsg(str(self._idListFundingAgency[0]), requestMsg)
+        for idFA in self._idListFundingAgency:
+            self.sendMsg(str(idFA), requestMsg)
 
-        response = self.receiveResponse().strip('\'').split(';')
-        if int(response[0]) == self._idListFundingAgency[0]:
-            if int(response[1]) == ProposalResponse.Approved.value:
-                self._isBusy = True
+            response = self.receiveResponse().strip('\'').split(';')
+            if int(response[0]) in self._idListFundingAgency: # Probalility of bug here
+                if int(response[1]) == ProposalResponse.Approved.value:
+                    return True
+        return False
     
     def workingOnResearch(self):
         operationChosen = OperationOnResearch.WITHDRAW_MONEY.value#random.choice(list(OperationOnResearch))
@@ -45,7 +47,7 @@ class Researcher(ComEntity):
     def behaviour(self):
         while (1):
             if self._isBusy == False:
-                self.makeResearchProposal()
+                self._isBusy = self.makeResearchProposal()
             else:
                 self.workingOnResearch()
             time.sleep(random.randrange(1, 7))
