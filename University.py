@@ -9,11 +9,15 @@ class University(ComEntity):
 	_idListFundingAgency: List[int]
 	_listAccount: List[ResearcherAccount] = []
 	_researchsInProgress: List[int] = []
+	_idListResearcher: List[int] = []
 
 	def __init__(self, id, idListFundingAgency, idListResearcher):
 		super().__init__(id)
 		self._idListFundingAgency = idListFundingAgency
-		for currentId in idListResearcher:
+		self._idListResearcher = idListResearcher
+
+	def setUp(self):
+		for currentId in self._idListResearcher:
 			self._listAccount.append(ResearcherAccount(currentId))
 
 	def findAccount(self, idResearched: int):

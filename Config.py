@@ -1,4 +1,5 @@
 from enum import Enum
+import random
 
 class Config:
     proposalApproved = "Approved"
@@ -21,3 +22,112 @@ class withDrawResponse(Enum):
     TAKE_THE_REST = 1
     NORMAL_WITHDRAW = 2
     EMPTY_FUND = 3
+
+class TypeOfEntities(Enum):
+    RESEARCHER = 0
+    UNIVERSITY = 1
+    FUNDING_AGENCY = 2
+
+
+""" Subjects générations """
+
+universityName = [
+        "Manatees University",
+        "Hello my World",
+        "Wait we are an University",
+        "Dublin City University",
+        "Centre Henry Muler",
+    ]
+fundingAgencyName = [
+        "Silicon Voulou Agency", # It the silicon valley agency but in Wish version 
+        "We love Science",
+        "Glados Agency",
+        "SCIENCE",
+        "A DRAGON, RUN agency",
+    ]
+
+ResearcherFirstName = [
+        "Martin",
+        "Clovis",
+        "This guy",
+        "The horse",
+        "The oster",
+        "The man",
+        "The woman",
+        "The truck",
+        "Tom",
+        "The manatee",
+    ]
+
+ResearcherSecondName = [
+        " who is stuck in the wash-machine",
+        " Nook",
+        " who is ugly",
+        " who stinks",
+        " who seem like a oster",
+        " who seem dead",
+        " in the dark",
+        " who is stuck in the door",
+        " Mice",
+        " who is very shy",
+    ]
+def createName(Type: TypeOfEntities) -> str:
+    if Type == TypeOfEntities.RESEARCHER:
+        return ResearcherFirstName[random.randrange(0, 9)] + ResearcherSecondName[random.randrange(0, 9)]
+    elif Type == TypeOfEntities.UNIVERSITY:
+        return universityName[random.randrange(0, 4)]
+    elif Type == TypeOfEntities.FUNDING_AGENCY:
+        return fundingAgencyName[random.randrange(0, 4)]
+
+
+firstPart = [
+        "Number of Drunk Irish",
+        "Number of french revolutions",
+        "Number of muffins eaten by Martin",
+        "Number of bailey's bottles drank by Gaelle",
+        "Number of rhum's bottles drank by Clovis",
+        "Percentage of Londis's spice box's paid",
+        "Percentage of students who know the C",
+        "Percentage of DCU Hampstead rooms happy",
+        "Percentage days where Clovis has hot water",
+        "Percentage of \'I haven't slept enough.\'",
+        "Percentage of \'I am hungry.\'",
+        "Percentage people who say \'Hello\'",
+        "Percentage people who say \'Pain au chocolat\'",
+        "Number of happy osters",
+        "Number of Cactus throw by Clovis at his roommates if they don\'t clean the kitchen"
+    ]
+secondPart = [
+        " in 1969",
+        " in the twenty-first century",
+        " on the 5 mai 1789",
+        " in Dublin",
+        " in Europe",
+        " in the CA4006 module",
+        " in the population of manatees",
+        " during the Great Depression",
+        " during the great war",
+        " during the good mornings in Vietnam",
+        " in the populations of DCU students",
+        " in 2023",
+        " during my birthday. It is the 18th april",
+        " in \'yeah, I\'m tired\' moments",
+        " during the cycle of reproduction of life of a fly"
+    ]
+
+def createSubject() -> str:
+    return firstPart[random.randrange(0, 14)] + secondPart[random.randrange(0, 14)]
+
+    
+    
+
+    
+
+
+
+
+"""
+Do you know the story of an optimistic guy?
+As he fell from an huge building, he said on each floor "Jusqu'ici, tout va bien" (translation: "so far all is well") while laughing.
+Clovis GILLES 2023
+"""

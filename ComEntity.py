@@ -13,6 +13,10 @@ class ComEntity(Thread):
 
   def getId(self):
     return self._id
+  
+  def setUp(self):
+    """Aims to be override"""
+    pass
 
   def sendMsg(self, queueName='default', msg =''):
     """Send a message on the queueName"""
