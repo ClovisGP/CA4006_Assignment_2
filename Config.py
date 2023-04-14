@@ -135,7 +135,7 @@ firstPart = [
         "Percentage people who say \'Hello\'",
         "Percentage people who say \'Pain au chocolat\'",
         "Number of happy osters",
-        "Number of Cactus throw by Clovis at his roommates when they did not clean the kitchen"
+        "Number of cactus throw by Clovis at his roommates when they did not clean the kitchen"
     ]
 secondPart = [
         " in 1969",

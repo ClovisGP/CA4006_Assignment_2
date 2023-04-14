@@ -1,7 +1,5 @@
 from threading import Thread
 import pika
-import os
-
 
 class ComEntity(Thread):
 

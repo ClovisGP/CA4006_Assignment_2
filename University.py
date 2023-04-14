@@ -54,7 +54,7 @@ class University(ComEntity):
 		if len(request) > 3:
 			research = account.getOneResearch(request[3])
 		if research == None:
-			self.sendMsg(request[0], str(self._id) + ';' + str(withDrawResponse.NOT_A_MEMBER.value))# It is the same behaviour
+			self.sendMsg(request[0], str(self._id) + ';' + str(withDrawResponse.NOT_A_MEMBER.value)) # It is the same behaviour
 			return None
 		operationRequested = int(request[1])
 		if operationRequested == OperationOnResearch.WITHDRAW_MONEY.value:
