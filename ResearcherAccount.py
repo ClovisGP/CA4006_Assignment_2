@@ -17,9 +17,9 @@ class ResearcherAccount:
     def getOneResearch(self, titleTargeted = '') -> Research:
         if len(self._listResearchs) == 0:
             return None
-        if (titleTargeted is ''):
+        if titleTargeted is '':
             return self._listResearchs[0]
         for current in self._listResearchs:
-            if (current._title == titleTargeted):
+            if current._title == titleTargeted:
                 return current
         return None

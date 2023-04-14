@@ -45,9 +45,8 @@ class Researcher(ComEntity):
                 self._isBusy = False
 
     def behaviour(self):
-        while (1):
-            if self._isBusy == False:
-                self._isBusy = self.makeResearchProposal()
-            else:
-                self.workingOnResearch()
-            time.sleep(random.randrange(1, 7))
+        if self._isBusy == False:
+            self._isBusy = self.makeResearchProposal()
+        else:
+            self.workingOnResearch()
+        time.sleep(random.randrange(1, 7))

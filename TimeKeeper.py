@@ -20,8 +20,7 @@ class TimeKeeper(ComEntity):
             self.sendMsg(str(targetedId), str(self._id) + ';' + str(self._days))
 
     def behaviour(self):
-        while (1):
-            time.sleep(Config.dayDuration)
-            self.sendDays()
-            self._days += 1
+        time.sleep(Config.dayDuration)
+        self.sendDays()
+        self._days += 1
             

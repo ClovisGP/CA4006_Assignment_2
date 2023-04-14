@@ -15,7 +15,7 @@ class ComEntity(Thread):
     return self._id
   
   def setUp(self):
-    """Aims to be override"""
+    """To be overrided"""
     pass
 
   def sendMsg(self, queueName='default', msg =''):
@@ -43,8 +43,9 @@ class ComEntity(Thread):
     return str(body, encoding="utf-8")
   
   def behaviour(self):
-     """"This method aims to contain the behaviour of the class."""
-     print("No behaviour programmed for this Entity")
+    """"This method aims to contain the behaviour of the class."""
+    print("No behaviour programmed for this Entity")
 
   def run(self) -> None:
-     self.behaviour()
+    while True:
+        self.behaviour()

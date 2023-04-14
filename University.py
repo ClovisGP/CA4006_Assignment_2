@@ -84,5 +84,4 @@ class University(ComEntity):
 				self.researcherRequestManagement(request, account)
     
 	def behaviour(self) -> None:
-		while (1):
-			self.response(self.receiveResponse())
+		self.response(self.receiveResponse())

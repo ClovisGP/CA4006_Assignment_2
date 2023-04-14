@@ -100,11 +100,11 @@ ResearcherFirstName = [
     ]
 
 ResearcherSecondName = [
-        " who is stuck in the wash-machine",
+        " who is stuck in the washing-machine",
         " Nook",
         " who is ugly",
         " who stinks",
-        " who seems like a oster",
+        " who seems like an oster",
         " who seems dead",
         " who seems human",
         " who is stuck in the door",
@@ -122,25 +122,25 @@ def createName(Type: TypeOfEntities) -> str:
 
 firstPart = [
         "Number of Drunk Irish",
-        "Number of french revolutions",
+        "Number of French revolutions",
         "Number of muffins eaten by Martin",
         "Number of bailey's bottles drank by Gaelle",
         "Number of rhum's bottles drank by Clovis",
         "Percentage of Londis's spice box's paid",
-        "Percentage of students who know the C",
-        "Percentage of DCU Hampstead rooms happy",
-        "Percentage days where Clovis has hot water",
+        "Percentage of students who know the C language",
+        "Percentage of DCU Hampstead rooms happy residents",
+        "Percentage days where Clovis had hot water",
         "Percentage of \'I haven't slept enough.\'",
         "Percentage of \'I am hungry.\'",
         "Percentage people who say \'Hello\'",
         "Percentage people who say \'Pain au chocolat\'",
         "Number of happy osters",
-        "Number of Cactus throw by Clovis at his roommates if they don\'t clean the kitchen"
+        "Number of Cactus throw by Clovis at his roommates when they did not clean the kitchen"
     ]
 secondPart = [
         " in 1969",
         " in the twenty-first century",
-        " on the 5 mai 1789",
+        " on the 5 May 1789",
         " in Dublin",
         " in Europe",
         " in the CA4006 module",
@@ -152,7 +152,7 @@ secondPart = [
         " in 2023",
         " during my birthday. It is the 18th april",
         " in \'yeah, I\'m tired\' moments",
-        " during the cycle of reproduction of life of a fly"
+        " during the cycle of reproduction of a fly"
     ]
 
 def createSubject() -> str:

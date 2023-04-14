@@ -46,5 +46,4 @@ class FundingAgency(ComEntity):
         
 
     def behaviour(self) -> None:
-        while (1):
-            self.analyse(self.receiveResponse())
+        self.analyse(self.receiveResponse())
